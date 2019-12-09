@@ -1,10 +1,4 @@
 const express = require("express")
-const app = express()
-const cors = require("cors")
-const bodyParser = require("body-parser")
-const logger = require("morgan")
-const mongoose = require("mongoose");
-
 const Pokemon = require("../../models/pokemon");
 const router = express.Router();
 
@@ -12,11 +6,28 @@ const router = express.Router();
 router.post('/insert', (req, res, next) => {
     console.log(req.body);
     const pokemon = new Pokemon({
-        _id: mongoose.Types.ObjectId(),
+        id: req.body.id,
         name: req.body.name,
+        nationalPokedexNumber: req.body.nationalPokedexNumber,
         imageUrl: req.body.imageUrl,
         imageUrlHiRes: req.body.imageUrlHiRes,
-        hp: req.body.hp
+        supertype: req.body.supertype,
+        subtype: req.body.subtype,
+        ability: req.body.ability,
+        hp: req.body.hp,
+        retreatCost: req.body.retreatCost,
+        convertedRetreatCost: req.body.convertedRetreatCost,
+        number: req.body.number,
+        artist: req.body.artist,
+        rarity: req.body.rarity,
+        series: req.body.series,
+        set: req.body.set,
+        setCode: req.body.setCode,
+        text: req.body.text,
+        artist: req.body.artist,
+        attacks: req.body.attacks,
+        weaknesses: req.body.weaknesses,
+        type: req.body.type,
     })
     pokemon
         .save()
