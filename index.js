@@ -3,12 +3,18 @@ const app = express()
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const logger = require("morgan")
-
+const mongoose = require("mongoose")
 const PORT = process.env.PORT || 8000;
+const pathMongo = require("./config/key_local");
+const pokemonApi = require("./api/routes/pokemon");
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-});
+mongoose.connect(pathMongo.mongoURI,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+app.use(bodyParser.json());
+app.use('/pokemon', pokemonApi);
 
 app.listen(PORT, () => {
     console.log('Server is running on port : ' + PORT);
