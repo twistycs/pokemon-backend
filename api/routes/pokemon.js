@@ -40,4 +40,30 @@ router.post('/insert', (req, res, next) => {
     })
 });
 
+router.get('/findAll', (req, res, next) => {
+    Pokemon.find()
+        .exec()
+        .then(pokemon => {
+            if (!pokemon) {
+                return res.status(404).json({
+                    message: "No Pokemon."
+                })
+            }
+            res.status(200).json(pokemon)
+        })
+});
+
+router.get('/:id', (req, res, next) => {
+    Pokemon.findOne({ _id: req.params.id })
+        .exec()
+        .then(pokemon => {
+            if (!pokemon) {
+                return res.status(404).json({
+                    message: "No Pokemon."
+                })
+            }
+            res.status(200).json(pokemon)
+        })
+});
+
 module.exports = router;
