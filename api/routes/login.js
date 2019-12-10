@@ -17,7 +17,10 @@ router.get('/', (req, res, next) => {
                     message: "No User."
                 })
             }
-            res.status(200).json
+            res.status(200).json({
+                status: 200,
+                message: "Success."
+            })
         })
 });
 

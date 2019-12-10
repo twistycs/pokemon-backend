@@ -12,6 +12,7 @@ router.post('/insert', (req, res, next) => {
         .then(user => {
             if (user) {
                 return res.status(409).json({
+                    status: 409,
                     message: "Username was duplicated. Please change your username."
                 })
             } else {
@@ -26,6 +27,8 @@ router.post('/insert', (req, res, next) => {
                     })
                     .catch(err => console.log(err));
                 res.status(200).json({
+                    status: 200,
+                    message: "Success.",
                     createdUser: user
                 })
             }
