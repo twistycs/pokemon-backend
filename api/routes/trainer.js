@@ -33,7 +33,7 @@ router.post('/insert', (req, res, next) => {
         })
 });
 
-router.get('/:userId', (req, res, next) => {
+router.post('/:userId', (req, res, next) => {
     console.log(req.params.userId);
     Trainer.find({ 'fkUser': req.params.userId })
         .exec()
