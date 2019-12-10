@@ -5,20 +5,32 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 
 router.post('/insert', (req, res, next) => {
-    console.log(req.body);
-    const trainer = new Trainer({
-        fkUser: req.body.fkUser,
-        fkPokemon: req.body.fkPokemon
-    })
-    trainer
-        .save()
-        .then(result => {
-            console.log(result)
+    Trainer.findOne({
+        'fkUser': req.body.fkUser,
+        'fkPokemon': req.body.fkPokemon
+    }).exec()
+        .then(trainer => {
+            if (trainer) {
+                return res.status(409).json({
+                    status: 409,
+                    message: "Pokemon was in your pokedex."
+                })
+            } else {
+                const trainer = new Trainer({
+                    fkUser: req.body.fkUser,
+                    fkPokemon: req.body.fkPokemon
+                })
+                trainer
+                    .save()
+                    .then(result => {
+                        res.status(200).json({
+                            status: 200,
+                            message: "Success"
+                        })
+                    })
+                    .catch(err => console.log(err));
+            }
         })
-        .catch(err => console.log(err));
-    res.status(200).json({
-        createdTrainer: trainer
-    })
 });
 
 router.get('/:userId', (req, res, next) => {
