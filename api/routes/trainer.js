@@ -60,7 +60,7 @@ router.post('/:userId', (req, res, next) => {
                     message: "No Trainer."
                 })
             }
-            res.status(200).json(trainer.result)
+            res.status(200).json(trainer)
         })
 });
 
