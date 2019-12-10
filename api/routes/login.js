@@ -14,7 +14,7 @@ router.get('/', (req, res, next) => {
             console.log(user);
             if (!user) {
                 return res.status(404).json({
-                    message: "No User."
+                    message: "No User. "
                 })
             }
             res.status(200).json({
