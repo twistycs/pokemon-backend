@@ -35,9 +35,26 @@ router.post('/insert', (req, res, next) => {
 
 router.post('/:userId', (req, res, next) => {
     console.log(req.params.userId);
-    Trainer.find({ 'fkUser': req.params.userId })
+    Trainer.aggregate(
+        [{
+            $match: {
+                fkUser: req.params.userId
+            },
+        },
+        {
+            $lookup: {
+                from: "pokemons",
+                localField: "fkPokemon",
+                foreignField: "id",
+                "as": "result"
+            }
+        },
+        {
+            $unwind: "$result"
+        }])
         .exec()
         .then(trainer => {
+            console.log(trainer);
             if (!trainer) {
                 return res.status(404).json({
                     message: "No Trainer."
