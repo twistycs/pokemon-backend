@@ -2,7 +2,7 @@ const express = require("express")
 const User = require("../../models/user");
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.post('/', (req, res, next) => {
     console.log(req.body.userName);
     console.log(req.body.password);
     User.findOne({
