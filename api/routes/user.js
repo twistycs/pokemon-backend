@@ -37,7 +37,7 @@ router.post('/insert', (req, res, next) => {
 
 router.post('/searchAll', (req, res, next) => {
     User.find({})
-        .select('-userName')
+        .select('-__v')
         .select('-password')
         .exec()
         .then(user => {
