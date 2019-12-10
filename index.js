@@ -16,6 +16,8 @@ mongoose.connect(pathMongo.mongoURI,
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
+
+app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' })); //limit because add pokemon to mongodb
 app.use('/pokemon', pokemonApi);
 app.use('/user', userApi);
