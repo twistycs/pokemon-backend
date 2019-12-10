@@ -35,4 +35,19 @@ router.post('/insert', (req, res, next) => {
         })
 });
 
+router.post('/searchAll', (req, res, next) => {
+    User.find({})
+        .select('-userName')
+        .select('-password')
+        .exec()
+        .then(user => {
+            res.status(200).json({
+                status: 200,
+                message: "Success.",
+                listUser: user
+            })
+
+        })
+});
+
 module.exports = router;
