@@ -47,20 +47,26 @@ router.post('/', (req, res, next) => {
         })
 });
 
+router.get('/username', verifyToken, (req, res, next) => {
+    return res.status(200).json(decodedToken.userName);
+})
+
+let decodedToken = '';
 const verifyToken = (req, res, next) => {
-    if (!req.headers.authorization) {
-        return res.status(401).send('Unauthorized Request');
-    }
-    let token = req.headers.authorization.split(' ')[1];
-    if (token === null) {
-        return res.status(401).send('Unauthorized Request');
-    }
-    let payload = jwt.verify(token, 'secretKey');
-    if (!payload) {
-        return res.status(401).send('Unauthorized Request');
-    }
-    req.userId = payload.subject;
-    next();
+    let token = req.query.token;
+
+    jwt.verify(token, 'secret', (err, tokendata) => {
+        if (err) {
+            return res.status(401).json({
+                message: "Unauthorized Request"
+            });
+        }
+        if (tokendata) {
+            decodedToken = tokendata;
+            next();
+        }
+    })
+
 }
 
 
