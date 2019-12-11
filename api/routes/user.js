@@ -1,10 +1,9 @@
 const express = require("express")
 const User = require("../../models/user");
 const router = express.Router();
-
+var bcrypt = require('bcrypt');
 
 router.post('/insert', (req, res, next) => {
-    console.log(req.body);
     User.findOne({
         'userName': req.body.userName
     })
@@ -16,20 +15,23 @@ router.post('/insert', (req, res, next) => {
                     message: "Username was duplicated. Please change your username."
                 })
             } else {
-                const user = new User({
-                    userName: req.body.userName,
-                    password: req.body.password
-                })
-                user
-                    .save()
-                    .then(result => {
-                        console.log(result)
-                    })
-                    .catch(err => console.log(err));
-                res.status(200).json({
-                    status: 200,
-                    message: "Success.",
-                    createdUser: user
+                bcrypt.hash(req.body.password, 12, (err, hash) => {
+                    if (err) {
+                        return res.status(500).json({
+                            error: err
+                        });
+                    } else {
+                        const user = new User({
+                            userName: req.body.userName,
+                            password: hash
+                        })
+                        user
+                            .save()
+                        res.status(200).json({
+                            status: 200,
+                            message: "Success."
+                        })
+                    }
                 })
             }
         })
