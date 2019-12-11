@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.14",
     "morgan": "^1.9.1",
+    "node-pre-gyp": "^0.14.0",
     "nodemon": "^2.0.1"
   },
   "devDependencies": {},
