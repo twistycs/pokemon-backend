@@ -52,7 +52,7 @@ router.get('/username', verifyToken, (req, res, next) => {
 })
 
 let decodedToken = '';
-const verifyToken = (req, res, next) => {
+function verifyToken(req, res, next) {
     let token = req.query.token;
 
     jwt.verify(token, 'secret', (err, tokendata) => {
