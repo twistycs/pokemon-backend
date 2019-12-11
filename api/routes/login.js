@@ -28,7 +28,7 @@ router.post('/', (req, res, next) => {
                         },
                             "secret",
                             {
-                                expiresIn: "1h"
+                                expiresIn: "30s"
                             }
                         )
                         return res.status(200).json({
