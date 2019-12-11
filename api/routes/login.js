@@ -2,7 +2,7 @@ const express = require("express")
 const User = require("../../models/user");
 const router = express.Router();
 var bcrypt = require('bcrypt');
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 router.post('/', (req, res, next) => {
     User.findOne({
@@ -23,9 +23,18 @@ router.post('/', (req, res, next) => {
                         })
                     }
                     if (result) {
+                        const token = jwt.sign({
+                            userName: user.userName
+                        },
+                            "secret",
+                            {
+                                expiresIn: "1h"
+                            }
+                        )
                         return res.status(200).json({
                             status: 200,
-                            message: "Success."
+                            message: "Success.",
+                            token: token
                         })
                     }
                     res.status(401).json({
