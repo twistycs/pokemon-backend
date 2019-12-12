@@ -28,7 +28,7 @@ router.post('/', (req, res, next) => {
                         },
                             "secret",
                             {
-                                expiresIn: "30s"
+                                expiresIn: "1h"
                             }
                         )
                         return res.status(200).json({
@@ -54,7 +54,7 @@ router.get('/username', verifyToken, (req, res, next) => {
 let decodedToken = '';
 function verifyToken(req, res, next) {
     let token = req.query.token;
-
+    console.log(token);
     jwt.verify(token, 'secret', (err, tokendata) => {
         if (err) {
             return res.status(401).json({
